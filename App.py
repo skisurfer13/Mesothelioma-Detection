@@ -11,8 +11,6 @@ import seaborn as sns
 from PIL import Image
 from sklearn import preprocessing
 
-
-
 #App description
 st.markdown('''
 #  Mesothelioma Detector 
@@ -38,14 +36,11 @@ st.subheader('Training Dataset')
 st.write(dfnew.describe())
 
 
-
-#train data. Fun!
 x = dfnew.drop(['Outcome'], axis = 1)
 y = dfnew.iloc[:, -1]
 x_train, x_test, y_train, y_test = train_test_split(x,y, test_size = 0.6, random_state = 0)
 lab_enc = preprocessing.LabelEncoder()
 training_scores_encoded = lab_enc.fit_transform(y_train)
-
 
 #User reports
 def user_report():
@@ -63,10 +58,7 @@ def user_report():
   Creactive_Protein = st.sidebar.slider('C-reactive Protein', 0,120, 6)
   
   
-  
-  
-  
-  
+
   user_report_data = {
       'Age':Age,
       'Platelet_Count':Platelet_Count,
@@ -86,15 +78,9 @@ def user_report():
   return report_data
 
 
-
-
-
 user_data = user_report()
 st.subheader('Patient Data')
 st.write(user_data)
-
-
-
 
 
 rf  = RandomForestClassifier()
@@ -102,10 +88,8 @@ rf.fit(x_train, training_scores_encoded)
 user_result = rf.predict(user_data)
 
 
-
 #Visualizations, this is where the beauty begins.
 st.title('Graphical Patient Report')
-
 
 
 if user_result[0]==0:
@@ -113,7 +97,7 @@ if user_result[0]==0:
 else:
   color = 'red'
 
-#Good old glucose
+
 st.header('Platelet Count Value Graph (Yours vs Others)')
 fig_Radius = plt.figure()
 ax3 = sns.scatterplot(x = 'Age', y = 'Platelet_Count', data = df, hue = 'Outcome' , palette='Purples')
@@ -124,7 +108,6 @@ plt.title('0 - Healthy & 1 - Unhealthy')
 st.pyplot(fig_Radius)
 
 
-#Insulin
 st.header('Blood Lactic Dehydrogenise Value Graph (Yours vs Others)')
 fig_Texture = plt.figure()
 ax9 = sns.scatterplot(x = 'Age', y = 'Blood_Lactic_Dehydrogenise', data = df, hue = 'Outcome', palette='rainbow')
@@ -135,7 +118,6 @@ plt.title('0 - Healthy & 1 - Unhealthy')
 st.pyplot(fig_Texture)
 
 
-#Famous saying BP
 st.header('Alkaline Phosphatise Value Graph (Yours vs Others)')
 fig_Perimeter = plt.figure()
 ax5 = sns.scatterplot(x = 'Age', y = 'Alkaline_Phosphatise', data = df, hue = 'Outcome', palette='Blues')
@@ -146,7 +128,6 @@ plt.title('0 - Healthy & 1 - Unhealthy')
 st.pyplot(fig_Perimeter)
 
 
-#Did'nt even know this before nutrition training 
 st.header('Total Protein Value Graph (Yours vs Others)')
 fig_Area = plt.figure()
 ax11 = sns.scatterplot(x = 'Age', y = 'Total_Protein', data = df, hue = 'Outcome', palette='Greens')
@@ -157,7 +138,6 @@ plt.title('0 - Healthy & 1 - Unhealthy')
 st.pyplot(fig_Area)
 
 
-#Something new, cool
 st.header('Albumin Value Graph (Yours vs Others)')
 fig_Smoothness = plt.figure()
 ax13 = sns.scatterplot(x = 'Age', y = 'Albumin', data = df, hue = 'Outcome', palette='rocket')
@@ -168,7 +148,6 @@ plt.title('0 - Healthy & 1 - Unhealthy')
 st.pyplot(fig_Smoothness)
 
 
-#Don't even know how thats related to diabetes.The dataset was females only though
 st.header('Glucose count Graph (Yours vs Others)')
 fig_Compactness = plt.figure()
 ax1 = sns.scatterplot(x = 'Age', y = 'Glucose', data = df, hue = 'Outcome', palette = 'magma')
@@ -179,7 +158,6 @@ plt.title('0 - Healthy & 1 - Unhealthy')
 st.pyplot(fig_Compactness)
 
 
-#Wonder how people measure that 
 st.header('Pleural Lactic Dehydrogenise Value Graph (Yours vs Others)')
 fig_Concavity = plt.figure()
 ax7 = sns.scatterplot(x = 'Age', y = 'Pleural_Lactic_Dehydrogenise', data = df, hue = 'Outcome', palette='Reds')
@@ -190,7 +168,6 @@ plt.title('0 - Healthy & 1 - Unhealthy')
 st.pyplot(fig_Concavity)
 
 
-
 st.header('Pleural Protein Value Graph (Yours vs Others)')
 fig_Concavepoints = plt.figure()
 ax7 = sns.scatterplot(x = 'Age', y = 'Pleural_Protein', data = df, hue = 'Outcome', palette='mako')
@@ -199,8 +176,6 @@ plt.xticks(np.arange(0,100,5))
 plt.yticks(np.arange(0.0,8.0,0.5))
 plt.title('0 - Healthy & 1 - Unhealthy')
 st.pyplot(fig_Concavepoints)
-
-
 
 
 st.header('Pleural Albumin Value Graph (Yours vs Others)')
@@ -232,12 +207,6 @@ plt.title('0 - Healthy & 1 - Unhealthy')
 st.pyplot(fig_FractalDimension)
 
 
-
-
-
-
-
-
 #Finally!
 st.subheader('Your Report: ')
 output=''
@@ -248,17 +217,12 @@ else:
 st.title(output)
 
 
-
 st.write("This dataset is also available on the UC Irvine Machine Learning Repository")
 st.write("Dataset Citation: An approach based on probabilistic neural network for diagnosis of Mesothelioma's disease By: Er, Orhan; Tanrikulu, Abdullah Cetin; Abakay, Abdurrahman; et al. COMPUTERS & ELECTRICAL ENGINEERING Volume: 38 Issue: 1 Pages: 75-81 Published: JAN 2012")
-
-
 
 
 #Most important for users
 st.subheader('Lets raise awareness for Mesothelioma and show our support for Mesothelioma awareness and help many patients around the world.')
 st.write("Mesothelioma Awareness Day: 26 September")
-
-
 
 st.write("Disclaimer: This is just a learning project based on one particular dataset so please do not depend on it to actually know if you have Mesothelioma or not. It might still be a false positive or false negative. A doctor is still the best fit for the determination of such diseases.")
